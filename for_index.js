@@ -36,6 +36,8 @@ class Tag{
 	}
 }
 
+//example
+/*
 var d = new Tag('div','ff');
 d.css({
 	height:'100px',
@@ -46,3 +48,4 @@ d.attrib({
 	className:'div-class-name'
 });
 d.mount('root');
+*/
