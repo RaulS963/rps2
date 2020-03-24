@@ -22,6 +22,10 @@ class Tag{
 		});
 		console.log(attributesValues);
 	}
+	
+	innerhtml(txt){
+		this.ele.innerHTML = txt;
+	}
 
 	getId(){
 		return this.ele.id;
