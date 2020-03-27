@@ -1,7 +1,9 @@
 class Tag{
-	constructor(tag,id){
+	constructor(tag,id,mount_id='root'){
 		this.ele = document.createElement(tag);
 		this.ele.id = id;
+		this.mount_id = mount_id;
+		document.getElementById(mount_id).appendChild(this.ele);
 	}
 
 	css(props){
@@ -27,6 +29,14 @@ class Tag{
 		this.ele.innerHTML = txt;
 	}
 
+	setChildElements(eles){
+		console.log(eles);
+		let len = eles.length;
+		for(let i=0;i<len;i++){
+			document.getElementById(this.ele.id).appendChild(eles[i].getNode());
+		}
+	}
+
 	getId(){
 		return this.ele.id;
 	}
@@ -35,21 +45,56 @@ class Tag{
 		return this.ele;
 	}
 
-	mount(parent_id){
-		document.getElementById(parent_id).appendChild(this.ele);
+	show(){
+		this.ele.style.display = 'block';
+	}
+
+	hide(){
+		this.ele.style.display = 'none';
+	}
+
+	remove(){
+		document.getElementById(this.mount_id).removeChild(this.ele);
+	}
+
+}
+
+
+
+class Link extends Tag{
+	constructor(id,url='#',linkText='link',target=false){
+		super('a',id);
+		this.ele.href = url;
+		this.ele.innerHTML = linkText;
+		if(target == true){
+			this.ele.target = '_blank';
+		}
 	}
 }
 
-//example
-/*
-var d = new Tag('div','ff');
-d.css({
-	height:'100px',
-	border:'1px solid black',
-	width:'200px'
-});
-d.attrib({
-	className:'div-class-name'
-});
-d.mount('root');
-*/
+class NavBar{
+	constructor(id,mount_id){
+		this.ele = document.createElement('table');
+		this.ele.id = id;
+		this.ele.width = "100%";
+		this.ele.style.position = 'sticky';
+		this.ele.style.top = '0';
+		this.ele.style.backgroundColor = 'black';
+		document.getElementById(mount_id).appendChild(this.ele);
+	}
+
+	setPages(objs){
+		var len = objs.length;
+		let keylists = Object.keys(objs);
+		console.log(`keylist: ${keylists}`);
+		let tr = document.createElement('tr');
+		this.ele.appendChild(tr);
+		keylists.map((key)=>{
+			let td = document.createElement('td');
+			td.align = 'center';
+			td.innerHTML = `<a href='${objs[key]}' style="color:white" > ${key} </a>`;
+			td.height = '40px';
+			tr.appendChild(td);
+		});
+	}
+}
