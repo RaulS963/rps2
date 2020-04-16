@@ -42,6 +42,70 @@ navbar.setPages(
 	});
 	```
 
+## Tag
+```javascript
+class Tag{
+	constructor(tag,id,mount_id='root'){
+		this.ele = document.createElement(tag);
+		this.ele.id = id;
+		this.mount_id = mount_id;
+		document.getElementById(mount_id).appendChild(this.ele);
+	}
+
+	css(props){
+		let keylist = Object.keys(props);
+		console.log(keylist);
+		var style = keylist.map((keys) => {
+			this.ele.style[keys] = props[keys];
+			return this.ele.style[keys];
+		});
+		console.log(style);
+	}
+
+	attrib(props){
+		let keylist = Object.keys(props);
+		var attributesValues = keylist.map((key)=>{
+			this.ele[key] = props[key];
+			return this.ele[key];
+		});
+		console.log(attributesValues);
+	}
+	
+	innerhtml(txt){
+		this.ele.innerHTML = txt;
+	}
+
+	setChildElements(eles){
+		console.log(eles);
+		let len = eles.length;
+		for(let i=0;i<len;i++){
+			document.getElementById(this.ele.id).appendChild(eles[i].getNode());
+		}
+	}
+
+	getId(){
+		return this.ele.id;
+	}
+
+	getNode(){
+		return this.ele;
+	}
+
+	show(){
+		this.ele.style.display = 'block';
+	}
+
+	hide(){
+		this.ele.style.display = 'none';
+	}
+
+	remove(){
+		document.getElementById(this.mount_id).removeChild(this.ele);
+	}
+}
+
+```
+
 ## Creating custom Features
 To create your own custom Tags or Features extend the ```Tag``` class.
 example:
